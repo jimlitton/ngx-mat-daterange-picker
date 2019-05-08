@@ -112,6 +112,7 @@ export class AppComponent {
                     format: 'mediumDate',
                     range: {fromDate:today, toDate: today},
                     applyLabel: "Submit",
+                    enforceToAfterFrom: false,
                     calendarOverlayConfig: {
                       shouldCloseOnBackdropClick: false,
                       hasBackDrop: false
