@@ -107,23 +107,8 @@ export class AppComponent {
     const toMax = new Date(today.getFullYear(), today.getMonth()+2, 0);
 
     this.setupPresets();
-    this.options = {
-                    presets: this.presets,
-                    format: 'mediumDate',
-                    range: {fromDate:today, toDate: today},
-                    applyLabel: "Submit",
-                    enforceToAfterFrom: false,
-                    calendarOverlayConfig: {
-                      shouldCloseOnBackdropClick: false,
-                      hasBackDrop: false
-                    }
-                    // cancelLabel: "Cancel",
-                    // excludeWeekends:true,
-                    // fromMinMax: {fromDate:fromMin, toDate:fromMax},
-                    // toMinMax: {fromDate:toMin, toDate:toMax}
-                  };
-  }
-  
+    this.setupOptions();
+      
   // handler function that receives the updated date range object
   updateRange(range: Range){
     this.range = range;
@@ -154,14 +139,48 @@ export class AppComponent {
       {presetLabel: "Last Month", range:{ fromDate: lastMonthStart, toDate:lastMonthEnd }}
     ]
   }
+
+  setupOptions() {
+    const fromDate = this.myfilterstore.fromDate || this.today;
+    this.options = {
+      presets: this.presets,
+      format: 'mediumDate',
+      range: {
+        fromDate: fromDate,
+        toDate: this.myfilterstore.toDate || this.today
+      },
+      fromMinMax: {fromDate: undefined, toDate: this.today},
+      toMinMax: {fromDate: fromDate, toDate: this.today},
+      applyLabel: 'Submit',
+      enforceToAfterFrom: true,
+      calendarOverlayConfig: {
+        shouldCloseOnBackdropClick: false,
+        hasBackDrop: false
+      }
+      // cancelLabel: "Cancel",
+      // excludeWeekends:true,
+      // fromMinMax: {fromDate:fromMin, toDate:fromMax},
+      // toMinMax: {fromDate:toMin, toDate:toMax}
+    };
+  }
+  
+  errorMessage(message: string) {
+    this.snackBar.open(message, 'X', {
+        panelClass: ['message', 'warning'],
+        duration: 6000
+    })
+  }
+
+  }
 }
+
 ```
 
 Pass the reference of the new range selection handler function to `selectedDateRangeChanged` **event emitter** and the `NgxDrpOptions` options reference to the `options` **input** property.
 
 `app.compnent.html`
 ```html
-<ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+<ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" [options]="options" (errorMessage)="errorMessage($event)"  #dateRangePicker></ngx-mat-drp>
 ```
 
 Reset the date using `ViewChild` reference:
@@ -213,6 +232,7 @@ export interface NgxDrpOptions {
     placeholder?: string;
     startDatePrefix?: string;
     endDatePrefix?: string;
+    enforceToAfterFrom: boolean;
 }
 ```
 
