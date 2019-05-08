@@ -1,21 +1,11 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  Output,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef
-} from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { CalendarOverlayService } from '../services/calendar-overlay.service';
-import { RangeStoreService } from '../services/range-store.service';
-import { Range, NgxDrpOptions } from '../model/model';
-import { ConfigStoreService } from '../services/config-store.service';
+import { DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { NgxDrpOptions, Range } from '../model/model';
+import { CalendarOverlayService } from '../services/calendar-overlay.service';
+import { ConfigStoreService } from '../services/config-store.service';
+import { RangeStoreService } from '../services/range-store.service';
 
 @Component({
   selector: 'ngx-mat-drp',
@@ -34,10 +24,12 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
   calendarInput;
   @Output()
   readonly selectedDateRangeChanged: EventEmitter<Range> = new EventEmitter<Range>();
+  @Output()
+  readonly errorMessage: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   options: NgxDrpOptions;
-  private rangeUpdate$: Subscription;
   selectedDateRange = '';
+  private _subscriptions: Subscription[] = [];
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
@@ -50,7 +42,7 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.configStoreService.ngxDrpOptions = this.options;
     this.options.placeholder = this.options.placeholder || 'Choose a date';
-    this.rangeUpdate$ = this.rangeStoreService.rangeUpdate$.subscribe(range => {
+    const rangeUpdate$ = this.rangeStoreService.rangeUpdate$.subscribe(range => {
       const from: string = this.formatToDateString(
         range.fromDate,
         this.options.format
@@ -62,18 +54,23 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
       this.selectedDateRange = `${from} - ${to}`;
       this.selectedDateRangeChanged.emit(range);
     });
-
+    this._subscriptions.push(rangeUpdate$);
+    
     this.rangeStoreService.updateRange(
       this.options.range.fromDate,
       this.options.range.toDate
     );
+    
+    const rangeError$ = this.rangeStoreService.rangeError$.subscribe(msg => {
+        this.errorMessage.emit(msg);
+    });
+    this._subscriptions.push(rangeError$);
+    
     this.changeDetectionRef.detectChanges();
   }
 
   ngOnDestroy() {
-    if (this.rangeUpdate$) {
-      this.rangeUpdate$.unsubscribe();
-    }
+    this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   private formatToDateString(date: Date, format: string): string {

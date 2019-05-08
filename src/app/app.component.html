@@ -6,7 +6,7 @@
   <button (click)="reset()">Reset Dates</button>
   <hr class="demo-rule">
   <div class="demo-box">
-    <ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" [options]="options" #pickerOne></ngx-mat-drp>
+    <ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" (errorMessge)="errorMessage($event)" [options]="options" #pickerOne></ngx-mat-drp>
   </div>
 
 </div>

@@ -1,9 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  Range,
-  NgxDrpOptions,
-  PresetItem
-} from './modules/ngx-mat-drp/model/model';
+import { NgxDrpOptions, PresetItem, Range } from './modules/ngx-mat-drp/model/model';
 
 @Component({
   selector: 'ngx-mat-drp-root',
@@ -12,6 +8,7 @@ import {
 })
 export class AppComponent implements OnInit {
   range: Range = { fromDate: new Date(), toDate: new Date() };
+  message: string = '';
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
   @ViewChild('pickerOne') pickerOne;
@@ -28,7 +25,7 @@ export class AppComponent implements OnInit {
       presets: this.presets,
       format: 'mediumDate',
       range: { fromDate: today, toDate: today },
-      applyLabel: 'Submit'
+      applyLabel: 'Submit',
       // excludeWeekends:true,
       // fromMinMax: {fromDate:fromMin, toDate:fromMax},
       // toMinMax: {fromDate:toMin, toDate:toMax},
@@ -37,6 +34,10 @@ export class AppComponent implements OnInit {
 
   updateRange(range: Range) {
     this.range = range;
+  }
+
+  errorMessage(message: string) {
+    this.message = message;
   }
 
   setupPresets() {
