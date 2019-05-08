@@ -17,6 +17,7 @@ https://ashishgkwd.github.io/ngx-mat-daterange-picker/
 
 ![ngx-mat-daterange-picker.gif](https://raw.githubusercontent.com/ashishgkwd/ngx-mat-daterange-picker/master/src/assets/img/ngx-mat-daterange-picker.gif)
 
+![ngx-mat-daterange-picker-enforce-todate.gif](https://github.com/jimlitton/ngx-mat-daterange-picker/blob/master/docs/assets/img/ngx-mat-daterange-picker-enforce-todate.gif)
 
 ## Installation 
 
