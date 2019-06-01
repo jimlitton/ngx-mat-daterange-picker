@@ -6,7 +6,7 @@
     [selectedDate]="fromDate"
     [minDate]="fromMinDate"
     [maxDate]="fromMaxDate"
-    (selectedDateChange)="updateFromDate($event)"
+    (selectedDateChange)="updateFromDate($event, false)"
   >
   </calendar-wrapper>
   </div>
@@ -16,7 +16,7 @@
     [selectedDate]="toDate"
     [minDate]="toMinDate"
     [maxDate]="toMaxDate" 
-    (selectedDateChange)="updateToDate($event)"
+    (selectedDateChange)="updateToDate($event, false)"
   >
   </calendar-wrapper>
   </div>

@@ -30,6 +30,7 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
   options: NgxDrpOptions;
   selectedDateRange = '';
   private _subscriptions: Subscription[] = [];
+  overlayRef: OverlayRef;
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
@@ -78,10 +79,14 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
   }
 
   openCalendar(event) {
-    const overlayRef: OverlayRef = this.calendarOverlayService.open(
+    this.overlayRef = this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput
     );
+  }
+
+  closeCalendar() {
+    this.overlayRef.dispose();
   }
 
   public resetDates(range: Range) {
