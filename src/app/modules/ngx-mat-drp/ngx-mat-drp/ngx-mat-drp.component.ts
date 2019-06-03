@@ -86,7 +86,9 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
   }
 
   closeCalendar() {
-    this.overlayRef.dispose();
+    if (this.overlayRef) {
+        this.overlayRef.dispose();
+    }
   }
 
   public resetDates(range: Range) {

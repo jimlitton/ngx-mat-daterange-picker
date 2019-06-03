@@ -25,7 +25,7 @@ Angular Version | Compatible version
 ---|---
 7.2 | v1.1.5-alpha
 
-#### For Angular v6 and above:
+#### For Angular v7 and above:
 ```javascript
 npm install --save https://github.com/jimlitton/ngx-mat-daterange-picker/releases/download/1.1.5-alpha/ngx-mat-daterange-picker-1.1.5-alpha.tgz
 ```
@@ -233,21 +233,22 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `npm run packagr` to build the library project. The build artifacts will be stored in the `dist/`. 
 
+## Build, pacakgr, and distribute to github example
+```
+Build commands:
+  npm run packagr
+  npm run gh-build
 
-npm run packagr
-npm run gh-build
+Perform a pack on the dist folder contents:
+  cd dist
+  npm pack
 
-cd dist
-npm pack
+Create release on github project.
+Upload ngx-mat-daterange-picker-1.1.5-alpha.tgz to binaries or update the binary tgz.
 
-Create release on github project
-Upload ngx-mat-daterange-picker-1.1.5-alpha.tgz to binaries
-
-Do release on github
-
-The install of the tgz should work.
-npm install --save https://github.com/jimlitton/ngx-mat-daterange-picker/releases/download/1.1.5-alpha/ngx-mat-daterange-picker-1.1.5-alpha.tgz
-
+The npm install of the tgz:
+  npm install --save https://github.com/jimlitton/ngx-mat-daterange-picker/releases/download/1.1.5-alpha/ngx-mat-daterange-picker-1.1.5-alpha.tgz
+```
 
 
 ## Running unit tests
