@@ -9,7 +9,7 @@ import { ConfigStoreService } from '../services/config-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalendarWrapperComponent implements OnChanges {
-  @ViewChild(MatCalendar)
+  @ViewChild(MatCalendar, { static: true })
   matCalendar: MatCalendar<Date>;
 
   @Output()

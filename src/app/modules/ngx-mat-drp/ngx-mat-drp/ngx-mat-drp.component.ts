@@ -20,7 +20,7 @@ import { RangeStoreService } from '../services/range-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxMatDrpComponent implements OnInit, OnDestroy {
-  @ViewChild('calendarInput')
+  @ViewChild('calendarInput', { static: true })
   calendarInput;
   @Output()
   readonly selectedDateRangeChanged: EventEmitter<Range> = new EventEmitter<Range>();
